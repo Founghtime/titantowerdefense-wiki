@@ -2,8 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Titan Tower Defense Wiki</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="viewport-meta">
+  
+<script>
+  // Apply saved PC/Mobile mode as early as possible (before layout) for reliable viewport behavior.
+  (function(){
+    try{
+      var key = 'ttd_layout_mode';
+      var saved = localStorage.getItem(key);
+      var isMobile = (saved === 'mobile');
+      var meta = document.getElementById('viewport-meta') || document.querySelector('meta[name="viewport"]');
+      if (isMobile){
+        document.documentElement.classList.add('mobile-mode');
+        if (meta){
+          meta.setAttribute('content','width=1200, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no');
+        }
+      }
+    }catch(e){}
+  })();
+</script>
+<title>Titan Tower Defense Wiki</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Base Styles */
@@ -1560,13 +1578,133 @@
       word-break:break-word;
     }
 
+      /* =========================
+       PC Mode / Mobile Mode toggle
+       - PC Mode: normal responsive site
+       - Mobile Mode: larger desktop-like layout on phones (horizontal + vertical scroll)
+       ========================= */
+    .custom-header{ position: relative; }
+
+    .mode-switch{
+      position:static;
+      margin-top:12px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+    }
+    
+    .mode-toggle{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: #f2f2f2;
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .mode-toggle i{ font-size:1.05rem; opacity:.95; }
+    .mode-toggle:hover{
+      background: rgba(255,255,255,.10);
+      transform: translateY(-1px);
+    }
+    .mode-toggle:active{ transform: translateY(0); }
+    .mode-toggle:focus-visible{
+      outline: 2px solid rgba(100,181,246,.55);
+      outline-offset: 2px;
+    }
+    .mode-toggle .mode-label{
+      font-weight:900;
+    }
+    .mode-toggle .mode-badge{
+      font-size:.78rem;
+      font-weight:900;
+      padding:3px 8px;
+      border-radius:999px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(242,242,242,.86);
+      white-space:nowrap;
+    }
+    html.mobile-mode .mode-toggle{
+      background: rgba(100,181,246,.18);
+      border-color: rgba(100,181,246,.55);
+    }
+    .mode-pill{
+      appearance:none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(242,242,242,.86);
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:.86rem;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: background .2s ease, border-color .2s ease, transform .15s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .mode-pill:hover{
+      background: rgba(255,255,255,.08);
+      transform: translateY(-1px);
+    }
+    .mode-pill:active{
+      transform: translateY(0);
+    }
+    .mode-pill.active{
+      background: rgba(100,181,246,.22);
+      border-color: rgba(100,181,246,.55);
+      color: #f2f2f2;
+    }
+
+    /* In Mobile Mode allow horizontal scrolling like "desktop site" */
+    html.mobile-mode body{
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      /* Force a wider "desktop-like" canvas so phones can pan horizontally */
+      min-width: 1200px;
+    }
+    html.mobile-mode{
+      overflow-x: auto !important;
+    }
+
+    /* Slightly scale down the switch on very narrow screens so it doesn't collide with the title */
+    @media (max-width: 520px){
+      .mode-switch{
+      position:static;
+      margin-top:12px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+    }
+    .mode-pill{ padding:7px 10px; font-size:.82rem; }
+    }
+
   </style>
 </head>
 <body>
   <div class="custom-container">
     <header class="custom-header">
       <h1 class="custom-title">Titan Tower Defense Wiki (INCOMPLETE)</h1>
-    </header>
+      <div class="mode-switch" id="mode-switch" aria-label="Layout mode switch">
+  <button class="mode-toggle" id="mode-toggle" type="button" title="Toggle PC Mode / Mobile Mode" aria-pressed="false">
+    <i class="fas fa-desktop" aria-hidden="true"></i>
+    <span class="mode-label">PC Mode</span>
+    <span class="mode-badge">tap to switch</span>
+  </button>
+</div>
+</header>
     
     <div class="main-content">
       <div class="content-area">
@@ -2474,6 +2612,78 @@
   </div>
   
   <script>
+        // ====== PC / Mobile Mode Toggle ======
+    (function () {
+      const STORAGE_KEY = 'ttd_layout_mode';
+
+      // "Normal" responsive (PC Mode)
+      const VIEWPORT_PC = 'width=device-width, initial-scale=1.0';
+
+      // "Bigger desktop-like" (Mobile Mode) — lets phone users scroll horizontally + vertically
+      // Note: we keep initial-scale=1 so the page doesn't auto-shrink to fit the phone.
+      const VIEWPORT_MOBILE = 'width=1200, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no';
+
+      const metaViewport = document.getElementById('viewport-meta') || document.querySelector('meta[name="viewport"]');
+
+      function setMode(mode) {
+        const m = (mode === 'mobile') ? 'mobile' : 'pc';
+        const isMobile = (m === 'mobile');
+
+        document.documentElement.classList.toggle('mobile-mode', isMobile);
+
+        if (metaViewport) {
+          metaViewport.setAttribute('content', isMobile ? VIEWPORT_MOBILE : VIEWPORT_PC);
+        }
+
+        const sw = document.getElementById('mode-switch');
+        if (sw) {
+          sw.querySelectorAll('.mode-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.mode === m);
+          });
+        }
+
+        try { localStorage.setItem(STORAGE_KEY, m); } catch (e) {}
+      }
+
+      function getSavedMode() {
+        try {
+          const v = localStorage.getItem(STORAGE_KEY);
+          return (v === 'mobile' || v === 'pc') ? v : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const saved = getSavedMode();
+        setMode(saved || 'pc');
+
+        const toggleBtn = document.getElementById('mode-toggle');
+        if (!toggleBtn) return;
+
+        function syncToggleUI(){
+          const isMobile = document.documentElement.classList.contains('mobile-mode');
+          toggleBtn.setAttribute('aria-pressed', isMobile ? 'true' : 'false');
+          const icon = toggleBtn.querySelector('i');
+          const label = toggleBtn.querySelector('.mode-label');
+          const badge = toggleBtn.querySelector('.mode-badge');
+          if (icon) icon.className = isMobile ? 'fas fa-mobile-screen-button' : 'fas fa-desktop';
+          if (label) label.textContent = isMobile ? 'Mobile Mode' : 'PC Mode';
+          if (badge) badge.textContent = isMobile ? 'tap to switch' : 'tap to switch';
+        }
+
+        syncToggleUI();
+
+        toggleBtn.addEventListener('click', () => {
+          const isMobile = document.documentElement.classList.contains('mobile-mode');
+          const next = isMobile ? 'pc' : 'mobile';
+          setMode(next);
+          // Reload so viewport + breakpoints apply consistently across mobile browsers.
+          setTimeout(() => { location.reload(); }, 60);
+        });
+        });
+    })();
+
     // ====== MANUAL DATA ONLY ======
     const gameData = {
       // ----- UNITS (ручной ввод) -----
@@ -14648,7 +14858,7 @@ _refreshDisp();
               {
                 username: "Ethyrias",
                 role: "Owner",
-                imageUrl: "https://i.postimg.cc/WtcjYfQd/no-Filter.png",
+                imageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
                 signEffect: "Purple aura",
                 signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
                 profileLink: "https://www.roblox.com/users/68027875/profile"
@@ -14900,7 +15110,15 @@ _refreshDisp();
                 signEffect: "Purple aura",
                 signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
                 profileLink: "https://www.roblox.com/users/3375571476/profile"
-              }
+              },
+              {
+                username: "Celery (obtained from giveaways)",
+                role: "Other",
+                imageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                signEffect: "Large Light Green aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/3375571476/profile"
+              },
             ];
 
       // Role groups (order) — same UX as Banner + TV Woman Shop collapsible groups
@@ -14911,7 +15129,7 @@ _refreshDisp();
         { key: "admin", title: "Admin", css: "role-admin", aliases: ["admin", "administrator", "moderator", "mod"] },
         { key: "partner", title: "Partner", css: "role-partner", aliases: ["partner"] },
         { key: "tester", title: "Tester", css: "role-tester", aliases: ["tester", "qa", "test"] },
-        { key: "other", title: "Other", css: "role-other", aliases: [] }
+        { key: "other", title: "Other", css: "role-other", aliases: ["other"] }
       ];
 
       const norm = (v) => String(v || '').trim().toLowerCase();
