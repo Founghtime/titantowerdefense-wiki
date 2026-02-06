@@ -1670,13 +1670,16 @@
     /* In Mobile Mode allow horizontal scrolling like "desktop site" */
     html.mobile-mode body{
       overflow-x: auto !important;
+      overflow-y: auto !important;
       -webkit-overflow-scrolling: touch;
-      /* Force a wider "desktop-like" canvas so phones can pan horizontally */
-      min-width: 1200px;
     }
-    html.mobile-mode{
-      overflow-x: auto !important;
+
+    /* делаем “десктопную” ширину не через body/html, а через сам макет */
+    html.mobile-mode .custom-container{
+      width: 1200px;
+      max-width: none;
     }
+
 
     /* Slightly scale down the switch on very narrow screens so it doesn't collide with the title */
     @media (max-width: 520px){
@@ -2618,10 +2621,7 @@
 
       // "Normal" responsive (PC Mode)
       const VIEWPORT_PC = 'width=device-width, initial-scale=1.0';
-
-      // "Bigger desktop-like" (Mobile Mode) — lets phone users scroll horizontally + vertically
-      // Note: we keep initial-scale=1 so the page doesn't auto-shrink to fit the phone.
-      const VIEWPORT_MOBILE = 'width=1200, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no';
+      const VIEWPORT_MOBILE = VIEWPORT_PC; // <-- ключ
 
       const metaViewport = document.getElementById('viewport-meta') || document.querySelector('meta[name="viewport"]');
 
