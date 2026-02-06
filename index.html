@@ -742,6 +742,114 @@
     }
     .stats-table th { background: #2a2a2a; color: #64b5f6; }
     .stats-table tr:hover { background: #2a2a2a; }
+
+    /* ====== Warnings / Special tables ====== */
+    .warning-box{
+      margin-top: 12px;
+      background: rgba(231,76,60,.12);
+      border: 1px solid rgba(231,76,60,.55);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .warning-box .warning-title{
+      color: #ff6b6b;
+      font-weight: 900;
+      letter-spacing: .6px;
+      margin-bottom: 6px;
+    }
+    .warning-box p{ margin: 0; color: rgba(242,242,242,.9); }
+
+    .lab-controls{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 10px 0 14px;
+    }
+    .lab-controls label{
+      font-weight: 700;
+      color: rgba(242,242,242,.86);
+    }
+    .lab-controls select{
+      background: #1e1e1e;
+      border: 1px solid #444;
+      color: #e0e0e0;
+      border-radius: 12px;
+      padding: 8px 12px;
+      outline: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+
+    .table-flex{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tiny-img{
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #333;
+      border: 1px solid #444;
+      overflow: hidden;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tiny-img img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .effect-cell{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .effect-text{
+      flex: 1 1 auto;
+      min-width: 0;
+      color: rgba(242,242,242,.92);
+    }
+    .effect-img{
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+    }
+    .profilelink{
+      flex: 0 0 auto;
+      position: relative;
+    }
+    .profilelink > summary{
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .profilelink > summary::-webkit-details-marker{ display:none; }
+    .profilelink .fa-chevron-right{
+      transition: transform .18s ease;
+    }
+    .profilelink[open] .fa-chevron-right{
+      transform: rotate(90deg);
+    }
+    .plink-pop{
+      margin-top: 8px;
+    }
+    .plink-a{
+      color: #cfe3ff;
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: .95rem;
+      white-space: nowrap;
+    }
+    .plink-a:hover{ text-decoration: none; }
+
     
     /* Footer */
     .footer {
@@ -818,9 +926,8 @@
       color: #64b5f6;
       line-height: 1.2;
       font-weight: 700;
-        .tier-panel { margin-top: 12px; }
-
-}
+    }
+    .tier-panel { margin-top: 12px; }
     
     /* Responsive */
     @media (max-width: 900px) {
@@ -881,7 +988,54 @@
     .rarity-common    { background: #95a5a6; }
     .rarity-unknown   { background: #607d8b; }
     
-    /* ===== Robux Shop: name cell with image ===== */
+    
+    /* ===== SIGNS: Role pills (like rarities) ===== */
+    .role-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: .82rem;
+      color: #ffffff;
+      border: 2px solid rgba(255,255,255,.14);
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .role-owner{ background:#00c853; border-color:#00a845; } /* Emerald */
+    .role-community-manager{ background:#00bcd4; border-color:#0097a7; } /* Aquamarine */
+    .role-developer{ background:#0b5d1e; border-color:#083f14; } /* Dark green */
+    .role-admin{ background:#66bb6a; border-color:#43a047; } /* Light green */
+    .role-tester{ background:#42a5f5; border-color:#1e88e5; } /* Blue */
+    .role-partner{ background:#e53935; border-color:#c62828; } /* Red */
+    .role-other{ background:#607d8b; border-color:#546e7a; }
+
+    /* Role group header uses same look as Banner/TV Woman Shop rarity groups */
+    .role-group-header td{ /* inherit rarity-group-header feel */
+      background:#2a2a2a;
+      padding: 10px 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .role-group-toggle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .role-group-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .role-group-count{
+      color: rgba(242,242,242,.65);
+      font-weight: 800;
+      font-size: .85rem;
+    }
+/* ===== Robux Shop: name cell with image ===== */
     .name-cell {
       display: flex;
       align-items: center;
@@ -1515,16 +1669,39 @@
               </div>
             </div>
 
+            <!-- NEW: Shinies & Shiny Lab entry in main menu -->
+            <div class="card" data-section="shinies">
+              <div class="card-img">
+                <img src="https://i.postimg.cc/j2zB2qFb/image.png" alt="Shinies & Shiny Lab">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Shinies &amp; Shiny Lab</h3>
+                <div class="card-info-box">Click for Info</div>
+              </div>
+            </div>
+
+            <!-- NEW: Signs entry in main menu -->
+            <div class="card" data-section="signs">
+              <div class="card-img">
+                <img src="https://i.postimg.cc/7Ynpy6zX/transparent-Photoroom-2026-02-05T215312-511.png" alt="Signs">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Signs</h3>
+                <div class="card-info-box">Click for Info</div>
+              </div>
+            </div>
+            
             <!-- NEW: Tier List entry in main menu -->
             <div class="card" data-section="tier">
               <div class="card-img">
-                <img src="https://i.postimg.cc/3N4XZZ3m/image.png" alt="Tier List">
+                <img src="https://i.ibb.co/jXftSGL/image.png" alt="Tier List">
               </div>
               <div class="card-content">
                 <h3 class="card-title">Tier List</h3>
                 <div class="card-info-box">Click to View</div>
               </div>
             </div>
+
           </div>
         </div>
         
@@ -1916,6 +2093,107 @@
                 <tr>
                   <th>Code</th>
                   <th>Reward</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- NEW: Shinies & Shiny Lab View -->
+        <div id="shinies-view" class="content-view" style="display: none;">
+          <div class="content-header">
+            <h2 class="section-title"><i class="fas fa-star"></i> Shinies &amp; Shiny Lab</h2>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="nav-btn home" onclick="showView('home')">
+              <i class="fas fa-home"></i> Back to Main Menu
+            </button>
+          </div>
+
+          <div class="detail-desc">
+            <h3>Shiny buffs</h3>
+            <p>Buffs Unit damage by 5% and reduces Unit placement cost by 10%</p>
+          </div>
+
+          <div class="detail-desc">
+            <h3>How Shiny Lab works</h3>
+            <p>Shiny Lab makes the chosen Unit shiny if you win. Quantity of Units (identical to the first Unit) increases win chance and reduces roll cost (max 10 Units per roll).</p>
+          </div>
+
+          <div class="detail-desc">
+            <h3>Shiny Lab</h3>
+
+            <div class="warning-box">
+              <div class="warning-title">WARNING</div>
+              <p>If you lose, your units will be destroyed</p>
+            </div>
+
+
+            <div class="gear-level-controls shiny-level-controls">
+              <button class="gear-level-btn" id="shiny-prev-btn" type="button" aria-label="Previous level">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+
+              <select id="shiny-lab-level" class="gear-level-select" aria-label="Shiny Lab level"></select>
+
+              <button class="gear-level-btn" id="shiny-next-btn" type="button" aria-label="Next level">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <table class="stats-table" id="shiny-lab-table">
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Unit quantity</td><td id="shiny-lab-qty">—</td></tr>
+                <tr><td>Win Chance</td><td id="shiny-lab-chance">—</td></tr>
+                <tr><td>Cost</td><td id="shiny-lab-cost">—</td></tr>
+              </tbody>
+            </table>
+
+            
+          </div>
+        </div>
+
+        <!-- NEW: Signs View -->
+        <div id="signs-view" class="content-view" style="display: none;">
+          <div class="content-header">
+            <h2 class="section-title"><i class="fas fa-signature"></i> Signs</h2>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="nav-btn home" onclick="showView('home')">
+              <i class="fas fa-home"></i> Back to Main Menu
+            </button>
+          </div>
+
+          <div class="detail-desc">
+            <h3>Sign buffs</h3>
+            <p>Each sign buffs Unit damage by 2.5%, capped at 5%</p>
+
+            
+          </div>
+
+          <div class="detail-desc">
+            <h3>Signs</h3>
+            <div class="warning-box">
+              <div class="warning-title">WARNING</div>
+              <p>Only THESE people can sign Units</p>
+            </div>
+
+            <table class="stats-table" id="signs-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Sign effect</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -5667,7 +5945,7 @@
             {
               from: "Being on the same server with Malachite (@MalachiteTheGreat)",
               chance: "(doesn't always work))",
-              imageUrl: "https://i.postimg.cc/yxdps9Ph/transparent-Photoroom-2026-01-27T211421-598.png"
+              imageUrl: "https://i.postimg.cc/hGsLSkry/no_Filte23r.png"
             }
           ],
           usedForStats: [
@@ -6916,6 +7194,20 @@
         { code: "FOLLOWMALACHITE", reward: "50 coins" },
         { code: "FOLLOWU_VKV", reward: "50 coins" }
         // замени на реальные коды
+      ],
+
+      // ----- SIGNS (manual) -----
+      // Fill this list with the ONLY people who can sign Units.
+      // Each row: imageUrl + username (left column), role, signEffect + signEffectImageUrl (right side).
+      signs: [
+        // Example:
+        // {
+        //   username: "ExampleUser",
+        //   role: "Developer",
+        //   imageUrl: "https://i.postimg.cc/3N4XZZ3m/image.png",
+        //   signEffect: "+2.5% Unit damage",
+        //   signEffectImageUrl: "https://i.postimg.cc/3N4XZZ3m/image.png"
+        // }
       ],
 
       // ----- TIER LISTS (ручной ввод, NEW) -----
@@ -12254,6 +12546,8 @@ overallTierList: {
       tvwoman:document.getElementById('tvwoman-view'),
       robux:  document.getElementById('robux-view'),
       codes:  document.getElementById('codes-view'),
+      shinies:document.getElementById('shinies-view'),
+      signs:  document.getElementById('signs-view'),
       tier:   document.getElementById('tier-view'),
       detail: document.getElementById('detail-view')
     };
@@ -12338,6 +12632,29 @@ overallTierList: {
     
     // CODES elements
     const codesTable = document.getElementById('codes-table');
+
+    // SHINIES elements
+    const shinyLabLevelSelect = document.getElementById('shiny-lab-level');
+    const shinyLabQtyEl = document.getElementById('shiny-lab-qty');
+    const shinyLabChanceEl = document.getElementById('shiny-lab-chance');
+    const shinyLabCostEl = document.getElementById('shiny-lab-cost');
+
+    // SIGNS elements
+    const signsTable = document.getElementById('signs-table');
+
+    // Shiny Lab data (levels 1-10)
+    const SHINY_LAB_LEVELS = [
+      { level: 1,  unitQty: 1,  winChance: '5%',  cost: '140 gems' },
+      { level: 2,  unitQty: 2,  winChance: '11%', cost: '130 gems' },
+      { level: 3,  unitQty: 3,  winChance: '17%', cost: '120 gems' },
+      { level: 4,  unitQty: 4,  winChance: '23%', cost: '110 gems' },
+      { level: 5,  unitQty: 5,  winChance: '29%', cost: '100 gems' },
+      { level: 6,  unitQty: 6,  winChance: '35%', cost: '90 gems' },
+      { level: 7,  unitQty: 7,  winChance: '41%', cost: '80 gems' },
+      { level: 8,  unitQty: 8,  winChance: '47%', cost: '70 gems' },
+      { level: 9,  unitQty: 9,  winChance: '53%', cost: '60 gems' },
+      { level: 10, unitQty: 10, winChance: '60%', cost: '50 gems' }
+    ];
     
     function initWiki() {
       prepareData();
@@ -12377,6 +12694,24 @@ overallTierList: {
         if (!header) return;
 
         const rarity = header.getAttribute('data-rarity');
+        const role   = header.getAttribute('data-role');
+
+        // If this header is for role groups (Signs)
+        if (role) {
+          const tbody = header.parentElement;
+          const rows = tbody.querySelectorAll(`.role-group-row[data-role="${role}"]`);
+          const arrow = header.querySelector('.rarity-group-arrow');
+
+          const isCollapsed = header.classList.toggle('collapsed');
+          rows.forEach(row => {
+            row.style.display = isCollapsed ? 'none' : '';
+          });
+
+          if (arrow) arrow.textContent = isCollapsed ? '▶' : '▼';
+          return;
+        }
+
+        // Otherwise — classic rarity groups (Banner + TV Woman Shop)
         if (!rarity) return;
 
         const tbody = header.parentElement;
@@ -12388,13 +12723,12 @@ overallTierList: {
           row.style.display = isCollapsed ? 'none' : '';
         });
 
-        if (arrow) {
-          arrow.textContent = isCollapsed ? '▶' : '▼';
-        }
+        if (arrow) arrow.textContent = isCollapsed ? '▶' : '▼';
       });
       
       initTierModeSwitch();
       initRarityTierFiltersSingle();
+      initShinyLab();
       showView('home');
     }
     
@@ -12422,6 +12756,10 @@ overallTierList: {
           renderRobuxShop();
         } else if (view === 'codes') {
           renderCodesTable();
+        } else if (view === 'shinies') {
+          updateShinyLab();
+        } else if (view === 'signs') {
+          renderSignsTable();
         } else if (['units','items','maps','crates','gears'].includes(view)) {
           populateGrid(view);
         }
@@ -14239,7 +14577,444 @@ _refreshDisp();
       });
     }
 
-    // ===== Tier Lists: Overall + Rarity (single-select) =====
+    // ===== Shinies & Shiny Lab =====
+    function initShinyLab() {
+      if (!shinyLabLevelSelect) return;
+
+      // Build options
+      shinyLabLevelSelect.innerHTML = '';
+      SHINY_LAB_LEVELS.forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = String(l.level);
+        opt.textContent = `Level ${l.level}`;
+        shinyLabLevelSelect.appendChild(opt);
+      });
+
+      // Default
+      shinyLabLevelSelect.value = '1';
+      shinyLabLevelSelect.addEventListener('change', () => {
+        updateShinyLab();
+      });
+
+      // Arrow buttons (Gears-style)
+      const prevBtn = document.getElementById('shiny-prev-btn');
+      const nextBtn = document.getElementById('shiny-next-btn');
+
+      function setLevelSafe(newLevel) {
+        const clamped = Math.max(1, Math.min(10, newLevel));
+        shinyLabLevelSelect.value = String(clamped);
+        updateShinyLab();
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          const cur = Number(shinyLabLevelSelect.value || 1);
+          setLevelSafe(cur - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          const cur = Number(shinyLabLevelSelect.value || 1);
+          setLevelSafe(cur + 1);
+        });
+      }
+
+      updateShinyLab();
+    }
+
+    function updateShinyLab() {
+      if (!shinyLabLevelSelect) return;
+      const level = Number(shinyLabLevelSelect.value || 1);
+      const row = SHINY_LAB_LEVELS.find(x => x.level === level) || SHINY_LAB_LEVELS[0];
+
+      if (shinyLabQtyEl) shinyLabQtyEl.textContent = String(row.unitQty);
+      if (shinyLabChanceEl) shinyLabChanceEl.textContent = String(row.winChance);
+      if (shinyLabCostEl) shinyLabCostEl.textContent = String(row.cost);
+    }
+
+    // ===== Signs =====
+    function renderSignsTable() {
+      if (!signsTable) return;
+      const tbody = signsTable.querySelector('tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      const signers =
+        (Array.isArray(gameData.signs) && gameData.signs.length > 0)
+          ? gameData.signs
+          : [
+              {
+                username: "Ethyrias",
+                role: "Owner",
+                imageUrl: "https://i.postimg.cc/WtcjYfQd/no-Filter.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/68027875/profile"
+              },
+              {
+                username: "Indominiso",
+                role: "Co-Owner",
+                imageUrl: "https://i.postimg.cc/q7wskPLm/no_Filt1er.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1515697311/profile"
+              },
+              {
+                username: "MalachiteTheGreat",
+                role: "Co-Owner",
+                imageUrl: "https://i.postimg.cc/hGsLSkry/no_Filte23r.png",
+                signEffect: "Cherry Blossom aura, spinning Unit",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1767611543/profile"
+              },
+              {
+                username: "Shark3900",
+                role: "Community Manager",
+                imageUrl: "https://i.postimg.cc/XYzBN9Bs/no-F123ilter.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/7148503/profile"
+              },
+              {
+                username: "5_AMP",
+                role: "Developer",
+                imageUrl: "https://i.postimg.cc/yNK4ZbRK/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/61454797/profile"
+              },
+              {
+                username: "Gy_lo",
+                role: "Developer",
+                imageUrl: "https://i.postimg.cc/qvfWP5j1/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/464999183/profile"
+              },
+              {
+                username: "sowdsowd",
+                role: "Developer",
+                imageUrl: "https://i.postimg.cc/5yhkMXq4/image.png",
+                signEffect: "Red Diamond aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1642075142/profile"
+              },
+              {
+                username: "Vynrath",
+                role: "Developer",
+                imageUrl: "https://i.postimg.cc/qvx0jr4c/image.png",
+                signEffect: "Purple Black Hole aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/713431035/profile"
+              },
+              {
+                username: "dakaiya111",
+                role: "Administrator",
+                imageUrl: "https://i.postimg.cc/HLKysXKS/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/438471273/profile"
+              },
+              {
+                username: "jroaue",
+                role: "Administrator",
+                imageUrl: "https://i.postimg.cc/mg26WW7Q/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/347813052/profile"
+              },
+              {
+                username: "TNTOIOI1",
+                role: "Administrator",
+                imageUrl: "https://i.postimg.cc/mkW17RTQ/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1186971652/profile"
+              },
+              {
+                username: "ZB1TA",
+                role: "Administrator",
+                imageUrl: "https://i.postimg.cc/rmrtdz2m/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/149863322/profile"
+              },
+              {
+                username: "DigitizedPixels",
+                role: "Partner",
+                imageUrl: "https://i.postimg.cc/c17G5J1j/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/163488823/profile"
+              },
+              {
+                username: "Meddyson",
+                role: "Partner",
+                imageUrl: "https://i.ibb.co/pv35R20d/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/113006766/profile"
+              },
+              {
+                username: "OMan8439",
+                role: "Partner",
+                imageUrl: "https://i.ibb.co/FbXCtGZv/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/3814295012/profile"
+              },
+              {
+                username: "seawoo9220",
+                role: "Partner",
+                imageUrl: "https://i.ibb.co/1JRW8cyN/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/879470120/profile"
+              },
+              {
+                username: "YT_nValid",
+                role: "Partner",
+                imageUrl: "https://i.ibb.co/CpjwSPhc/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1735432752/profile"
+              },
+              {
+                username: "ddfdffdfex",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/4x8gc5Jg/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/340211085/profile"
+              },
+              {
+                username: "destroleyd",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/7xq7DKVM/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2018796015/profile"
+              },
+              {
+                username: "dum77y",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/mZFgG0TZ/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2201494223/profile"
+              },
+              {
+                username: "Founghtime",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/qR8GC18v/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/4070468102/profile"
+              },
+              {
+                username: "Jerrychen254",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/YBPyGbjg/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2300491150/profile"
+              },
+              {
+                username: "koycat128",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/5hPQ8pV4/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2728093433/profile"
+              },
+              {
+                username: "LorikTheBanana",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/7xjFypBV/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2565042621/profile"
+              },
+              {
+                username: "marko746720",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/hRZ4J39d/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1286965227/profile"
+              },
+              {
+                username: "maxy1010101",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/23THdvNB/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/77652759/profile"
+              },
+              {
+                username: "Mitchell357898",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/tgT9vcBS/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/2404056864/profile"
+              },
+              {
+                username: "suba322",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/3RxY6cnk/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/1466243577/profile"
+              },
+              {
+                username: "ulalifelord",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/C5MmLbk8/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/270357075/profile"
+              },
+              {
+                username: "UserSecrets",
+                role: "Tester",
+                imageUrl: "https://i.postimg.cc/CdTyFPHL/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/3124676934/profile"
+              },
+              {
+                username: "vucreose",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/kgTGrMDt/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/503580378/profile"
+              },
+              {
+                username: "WiratamaAlvaro",
+                role: "Tester",
+                imageUrl: "https://i.ibb.co/q39NznvR/image.png",
+                signEffect: "Purple aura",
+                signEffectImageUrl: "https://i.postimg.cc/CLpzQvCg/image.png",
+                profileLink: "https://www.roblox.com/users/3375571476/profile"
+              }
+            ];
+
+      // Role groups (order) — same UX as Banner + TV Woman Shop collapsible groups
+      const ROLE_GROUPS = [
+        { key: "owner", title: "Owner", css: "role-owner", aliases: ["owner", "co-owner", "co owner", "coowner"] },
+        { key: "community-manager", title: "Community Manager", css: "role-community-manager", aliases: ["community manager", "cm"] },
+        { key: "developer", title: "Developer", css: "role-developer", aliases: ["developer", "dev"] },
+        { key: "admin", title: "Admin", css: "role-admin", aliases: ["admin", "administrator", "moderator", "mod"] },
+        { key: "partner", title: "Partner", css: "role-partner", aliases: ["partner"] },
+        { key: "tester", title: "Tester", css: "role-tester", aliases: ["tester", "qa", "test"] },
+        { key: "other", title: "Other", css: "role-other", aliases: [] }
+      ];
+
+      const norm = (v) => String(v || '').trim().toLowerCase();
+
+      function getRoleGroup(roleRaw) {
+        const r = norm(roleRaw);
+        for (const g of ROLE_GROUPS) {
+          if (g.key === 'other') continue;
+          if (r === g.title.toLowerCase()) return g;
+          if (g.aliases.includes(r)) return g;
+        }
+        return ROLE_GROUPS.find(x => x.key === 'other');
+      }
+
+      // group signers by role group
+      const grouped = new Map(); // key -> array
+      for (const s of signers) {
+        const g = getRoleGroup(s.role);
+        if (!grouped.has(g.key)) grouped.set(g.key, []);
+        grouped.get(g.key).push({
+          ...s,
+          _roleKey: g.key,
+          _roleTitle: g.title,
+          _roleCss: g.css
+        });
+      }
+
+      // render in ROLE_GROUPS order
+      for (const group of ROLE_GROUPS) {
+        const list = grouped.get(group.key) || [];
+        if (!list.length) continue;
+
+        // header row (collapsible) — styled like rarity group headers
+        const headerTr = document.createElement('tr');
+        headerTr.className = 'rarity-group-header role-group-header';
+        headerTr.setAttribute('data-role', group.key);
+
+        const headerTd = document.createElement('td');
+        headerTd.colSpan = 3;
+
+        headerTd.innerHTML = `
+          <div class="role-group-toggle">
+            <div class="role-group-left">
+              <span class="rarity-group-arrow">▼</span>
+              <span class="role-pill ${group.css}">${group.title}</span>
+              <span class="role-group-count">(${list.length})</span>
+            </div>
+          </div>
+        `;
+
+        headerTr.appendChild(headerTd);
+        tbody.appendChild(headerTr);
+
+        // rows
+        for (const signer of list) {
+          const tr = document.createElement('tr');
+          tr.className = 'rarity-group-row role-group-row';
+          tr.setAttribute('data-role', group.key);
+
+          const tdUser = document.createElement('td');
+          tdUser.innerHTML = `
+            <div class="table-flex">
+              <div class="tiny-img">
+                <img src="${signer.imageUrl || ''}" alt="${signer.username || ''}">
+              </div>
+              <div>${signer.username || '—'}</div>
+            </div>
+          `;
+
+          const tdRole = document.createElement('td');
+          tdRole.innerHTML = `<span class="role-pill ${signer._roleCss}">${signer._roleTitle}</span>`;
+
+          const signText = signer.signEffect || '—';
+          const effectImg = signer.signEffectImageUrl || '';
+          const link = signer.profileLink || '';
+
+          const tdEffect = document.createElement('td');
+          tdEffect.innerHTML = `
+            <div class="effect-cell">
+              <div class="effect-text">${signText}</div>
+              ${effectImg ? `<img class="effect-img" src="${effectImg}" alt="Effect">` : ''}
+              ${link ? `
+                <details class="profilelink">
+                  <summary title="Profile link">
+                    <i class="fas fa-chevron-right"></i>
+                  </summary>
+                  <div class="plink-pop">
+                    <a class="plink-a" href="${link}" target="_blank" rel="noopener">Open profile</a>
+                  </div>
+                </details>
+              ` : ''}
+            </div>
+          `;
+          tr.appendChild(tdUser);
+          tr.appendChild(tdRole);
+          tr.appendChild(tdEffect);
+
+          tbody.appendChild(tr);
+        }
+      }
+    }
+
+    // ===== Tier Lists: Overall + Rarity (single-select) =====: Overall + Rarity (single-select) =====
 const TIER_RARITY_OPTIONS = ['common','uncommon','rare','epic','legendary','mythic','secret'];
 
 const tierModeState = {
